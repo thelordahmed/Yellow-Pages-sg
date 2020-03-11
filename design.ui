@@ -1,0 +1,2497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Yellow Pages SG Crawler</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="logo.qrc">
+    <normaloff>:/newPrefix/resourses/yp logo.png</normaloff>:/newPrefix/resourses/yp logo.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QWidget {
+  background-color: #19232D;
+  border: 0px solid #32414B;
+  padding: 0px;
+  color: #F0F0F0;
+  selection-background-color: #fcd726;
+  selection-color: #F0F0F0;
+}
+
+QWidget:disabled {
+  background-color: #19232D;
+  color: #787878;
+  selection-background-color: #14506E;
+  selection-color: #787878;
+}
+
+QWidget::item:selected {
+  background-color: #148CD2;
+}
+
+QWidget::item:hover {
+  background-color: #148CD2;
+  color: #32414B;
+}
+
+/* QMainWindow ------------------------------------------------------------
+
+This adjusts the splitter in the dock widget, not qsplitter
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qmainwindow
+
+--------------------------------------------------------------------------- */
+QMainWindow::separator {
+  background-color: #32414B;
+  border: 0px solid #19232D;
+  spacing: 0px;
+  padding: 2px;
+}
+
+QMainWindow::separator:hover {
+  background-color: #505F69;
+  border: 0px solid #fcd726;
+}
+
+QMainWindow::separator:horizontal {
+  width: 5px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  image: url(&quot;:/qss_icons/rc/toolbar_separator_vertical.png&quot;);
+}
+
+QMainWindow::separator:vertical {
+  height: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  image: url(&quot;:/qss_icons/rc/toolbar_separator_horizontal.png&quot;);
+}
+
+/* QToolTip ---------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtooltip
+
+--------------------------------------------------------------------------- */
+QToolTip {
+  background-color: #fcd726;
+  border: 1px solid #19232D;
+  color: #19232D;
+  /* Remove padding, for fix combo box tooltip */
+  padding: 0px;
+  /* Remove opacity, fix #174 - may need to use RGBA */
+}
+
+/* QStatusBar -------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qstatusbar
+
+--------------------------------------------------------------------------- */
+QStatusBar {
+  border: 1px solid #32414B;
+  /* Fixes Spyder #9120, #9121 */
+  background: #32414B;
+  /* Fixes #205, white vertical borders separating items */
+}
+
+QStatusBar::item {
+  border: none;
+}
+
+QStatusBar QToolTip {
+  background-color: #fcd726;
+  border: 1px solid #19232D;
+  color: #19232D;
+  /* Remove padding, for fix combo box tooltip */
+  padding: 0px;
+  /* Reducing transparency to read better */
+  opacity: 230;
+}
+
+QStatusBar QLabel {
+  /* Fixes Spyder #9120, #9121 */
+  background: transparent;
+}
+
+/* QCheckBox --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qcheckbox
+
+--------------------------------------------------------------------------- */
+QCheckBox {
+  background-color: #19232D;
+  color: #F0F0F0;
+  spacing: 4px;
+  outline: none;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+QCheckBox:focus {
+  border: none;
+}
+
+QCheckBox QWidget:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+QCheckBox::indicator {
+  margin-left: 4px;
+  height: 16px;
+  width: 16px;
+}
+
+
+/* QGroupBox --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qgroupbox
+
+--------------------------------------------------------------------------- */
+QGroupBox {
+  font-weight: bold;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  padding: 4px;
+  margin-top: 16px;
+}
+
+QGroupBox::title {
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  left: 3px;
+  padding-left: 3px;
+  padding-right: 5px;
+  padding-top: 8px;
+  padding-bottom: 16px;
+}
+
+QGroupBox::indicator {
+  margin-left: 2px;
+  height: 12px;
+  width: 12px;
+}
+
+
+
+/* QMenuBar ---------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qmenubar
+
+--------------------------------------------------------------------------- */
+QMenuBar {
+  background-color: #32414B;
+  padding: 2px;
+  border: 1px solid #19232D;
+  color: #F0F0F0;
+}
+
+QMenuBar:focus {
+  border: 1px solid #fcd726;
+}
+
+QMenuBar::item {
+  background: transparent;
+  padding: 4px;
+}
+
+QMenuBar::item:selected {
+  padding: 4px;
+  background: transparent;
+  border: 0px solid #32414B;
+}
+
+QMenuBar::item:pressed {
+  padding: 4px;
+  border: 0px solid #32414B;
+  background-color: #fcd726;
+  color: #F0F0F0;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+/* QMenu ------------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qmenu
+
+--------------------------------------------------------------------------- */
+QMenu {
+  border: 0px solid #32414B;
+  color: #F0F0F0;
+  margin: 0px;
+}
+
+QMenu::separator {
+  height: 1px;
+  background-color: #505F69;
+  color: #F0F0F0;
+}
+
+QMenu::icon {
+  margin: 0px;
+  padding-left: 8px;
+}
+
+QMenu::item {
+  background-color: #32414B;
+  padding: 4px 24px 4px 24px;
+  /* Reserve space for selection border */
+  border: 1px transparent #32414B;
+}
+
+QMenu::item:selected {
+  color: #F0F0F0;
+}
+
+QMenu::indicator {
+  width: 12px;
+  height: 12px;
+  padding-left: 6px;
+  /* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
+  /* exclusive indicator = radio button style indicator (see QActionGroup::setExclusive) */
+}
+
+QMenu::indicator:non-exclusive:unchecked {
+  image: url(&quot;:/qss_icons/rc/checkbox_unchecked.png&quot;);
+}
+
+QMenu::indicator:non-exclusive:unchecked:selected {
+  image: url(&quot;:/qss_icons/rc/checkbox_unchecked_disabled.png&quot;);
+}
+
+QMenu::indicator:non-exclusive:checked {
+  image: url(&quot;:/qss_icons/rc/checkbox_checked.png&quot;);
+}
+
+QMenu::indicator:non-exclusive:checked:selected {
+  image: url(&quot;:/qss_icons/rc/checkbox_checked_disabled.png&quot;);
+}
+
+QMenu::indicator:exclusive:unchecked {
+  image: url(&quot;:/qss_icons/rc/radio_unchecked.png&quot;);
+}
+
+QMenu::indicator:exclusive:unchecked:selected {
+  image: url(&quot;:/qss_icons/rc/radio_unchecked_disabled.png&quot;);
+}
+
+QMenu::indicator:exclusive:checked {
+  image: url(&quot;:/qss_icons/rc/radio_checked.png&quot;);
+}
+
+QMenu::indicator:exclusive:checked:selected {
+  image: url(&quot;:/qss_icons/rc/radio_checked_disabled.png&quot;);
+}
+
+
+/* QAbstractItemView ------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qcombobox
+
+--------------------------------------------------------------------------- */
+QAbstractItemView {
+  alternate-background-color: #19232D;
+  color: #F0F0F0;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+}
+
+QAbstractItemView QLineEdit {
+  padding: 2px;
+}
+
+/* QAbstractScrollArea ----------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qabstractscrollarea
+
+--------------------------------------------------------------------------- */
+QAbstractScrollArea {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  padding: 2px;
+  /* fix #159 */
+  min-height: 1.25em;
+  /* fix #159 */
+  color: #F0F0F0;
+}
+
+QAbstractScrollArea:disabled {
+  color: #787878;
+}
+
+/* QScrollArea ------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QScrollArea QWidget QWidget:disabled {
+  background-color: #19232D;
+}
+
+/* QScrollBar -------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qscrollbar
+
+--------------------------------------------------------------------------- */
+QScrollBar:horizontal {
+  height: 16px;
+  margin: 2px 16px 2px 16px;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  background-color: #19232D;
+}
+
+QScrollBar:vertical {
+  background-color: #19232D;
+  width: 16px;
+  margin: 16px 2px 16px 2px;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal {
+  background-color: #787878;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  min-width: 8px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: #fcd726;
+  border: 1px solid #fcd726;
+  border-radius: 4px;
+  min-width: 8px;
+}
+
+QScrollBar::handle:horizontal:focus {
+  border: 1px solid #fcd726;
+}
+
+QScrollBar::handle:vertical {
+  background-color: #787878;
+  border: 1px solid #32414B;
+  min-height: 8px;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+  background-color: #fcd726;
+  border: 1px solid #fcd726;
+  border-radius: 4px;
+  min-height: 8px;
+}
+
+QScrollBar::handle:vertical:focus {
+  border: 1px solid #fcd726;
+}
+
+
+QScrollBar::add-line:horizontal:hover, QScrollBar::add-line:horizontal:on {
+  border-image: url(&quot;:/qss_icons/rc/arrow_right.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+
+
+
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
+  background: none;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+  background: none;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+  background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+  background: none;
+}
+
+/* QTextEdit --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-specific-widgets
+
+--------------------------------------------------------------------------- */
+QTextEdit {
+  background-color: #19232D;
+  color: #F0F0F0;
+  border-radius: 4px;
+  border: 1px solid #32414B;
+}
+
+QTextEdit:hover {
+  border: 1px solid #fcd726;
+  color: #F0F0F0;
+}
+
+QTextEdit:focus {
+  border: 1px solid #fcd726;
+}
+
+QTextEdit:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+/* QPlainTextEdit ---------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QPlainTextEdit {
+  background-color: #19232D;
+  color: #F0F0F0;
+  border-radius: 4px;
+  border: 1px solid #32414B;
+}
+
+QPlainTextEdit:hover {
+  border: 1px solid #fcd726;
+  color: #F0F0F0;
+}
+
+QPlainTextEdit:focus {
+  border: 1px solid #fcd726;
+}
+
+QPlainTextEdit:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+/* QSizeGrip --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qsizegrip
+
+--------------------------------------------------------------------------- */
+
+/* QStackedWidget ---------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QStackedWidget {
+  padding: 2px;
+  border: 1px solid #32414B;
+  border: 1px solid #19232D;
+}
+
+/* QToolBar ---------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtoolbar
+
+--------------------------------------------------------------------------- */
+QToolBar {
+  background-color: #32414B;
+  border-bottom: 1px solid #19232D;
+  padding: 2px;
+  font-weight: bold;
+  spacing: 2px;
+}
+
+QToolBar QToolButton {
+  background-color: #32414B;
+  border: 1px solid #32414B;
+}
+
+QToolBar QToolButton:hover {
+  border: 1px solid #fcd726;
+}
+
+QToolBar QToolButton:checked {
+  border: 1px solid #19232D;
+  background-color: #19232D;
+}
+
+QToolBar QToolButton:checked:hover {
+  border: 1px solid #fcd726;
+}
+
+
+
+
+/* QAbstractSpinBox -------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QAbstractSpinBox {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  /* This fixes 103, 111 */
+  padding-top: 2px;
+  /* This fixes 103, 111 */
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 4px;
+  /* min-width: 5px; removed to fix 109 */
+}
+
+QAbstractSpinBox:up-button {
+  background-color: transparent #19232D;
+  subcontrol-origin: border;
+  subcontrol-position: top right;
+  border-left: 1px solid #32414B;
+  border-bottom: 1px solid #32414B;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 1px;
+  width: 12px;
+  margin-bottom: -1px;
+}
+
+
+
+
+QAbstractSpinBox:down-button {
+  background-color: transparent #19232D;
+  subcontrol-origin: border;
+  subcontrol-position: bottom right;
+  border-left: 1px solid #32414B;
+  border-top: 1px solid #32414B;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 1px;
+  width: 12px;
+  margin-top: -1px;
+}
+
+
+
+QAbstractSpinBox:hover {
+  border: 1px solid #fcd726;
+  color: #F0F0F0;
+}
+
+QAbstractSpinBox:focus {
+  border: 1px solid #fcd726;
+}
+
+QAbstractSpinBox:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+/* ------------------------------------------------------------------------ */
+/* DISPLAYS --------------------------------------------------------------- */
+/* ------------------------------------------------------------------------ */
+/* QLabel -----------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
+
+--------------------------------------------------------------------------- */
+QLabel {
+  background-color: #19232D;
+  border: 0px solid #32414B;
+  padding: 2px;
+  margin: 0px;
+  color: #F0F0F0;
+}
+
+QLabel:disabled {
+  background-color: #19232D;
+  border: 0px solid #32414B;
+  color: #787878;
+}
+
+/* QTextBrowser -----------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qabstractscrollarea
+
+--------------------------------------------------------------------------- */
+QTextBrowser {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  border-radius: 4px;
+}
+
+QTextBrowser:disabled {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #787878;
+  border-radius: 4px;
+}
+
+QTextBrowser:hover, QTextBrowser:!hover, QTextBrowser:selected, QTextBrowser:pressed {
+  border: 1px solid #32414B;
+}
+
+/* QGraphicsView ----------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QGraphicsView {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  border-radius: 4px;
+}
+
+QGraphicsView:disabled {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #787878;
+  border-radius: 4px;
+}
+
+QGraphicsView:hover, QGraphicsView:!hover, QGraphicsView:selected, QGraphicsView:pressed {
+  border: 1px solid #32414B;
+}
+
+/* QCalendarWidget --------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QCalendarWidget {
+  border: 1px solid #32414B;
+  border-radius: 4px;
+}
+
+QCalendarWidget:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+/* QLCDNumber -------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QLCDNumber {
+  background-color: #19232D;
+  color: #F0F0F0;
+}
+
+QLCDNumber:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+/* QProgressBar -----------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qprogressbar
+
+--------------------------------------------------------------------------- */
+QProgressBar {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  border-radius: 4px;
+  text-align: center;
+}
+
+QProgressBar:disabled {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #787878;
+  border-radius: 4px;
+  text-align: center;
+}
+
+QProgressBar::chunk {
+  background-color: #fcd726;
+  color: #19232D;
+  border-radius: 4px;
+}
+
+QProgressBar::chunk:disabled {
+  background-color: #14506E;
+  color: #787878;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------------ */
+/* BUTTONS ---------------------------------------------------------------- */
+/* ------------------------------------------------------------------------ */
+/* QPushButton ------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qpushbutton
+
+--------------------------------------------------------------------------- */
+QPushButton {
+  background-color: #505F69;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  border-radius: 6px;
+  padding: 3px;
+  outline: none;
+  /* Issue #194 - Special case of QPushButton inside dialogs, for better UI */
+  min-width: 80px;
+}
+
+QPushButton:disabled {
+  background-color: #32414B;
+  border: 1px solid #32414B;
+  color: #787878;
+  border-radius: 4px;
+  padding: 3px;
+}
+
+QPushButton:checked {
+  background-color: #32414B;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  padding: 3px;
+  outline: none;
+}
+
+QPushButton:checked:disabled {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #787878;
+  border-radius: 4px;
+  padding: 3px;
+  outline: none;
+}
+
+QPushButton:checked:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+QPushButton::menu-indicator {
+  subcontrol-origin: padding;
+  subcontrol-position: bottom right;
+  bottom: 4px;
+}
+
+QPushButton:pressed {
+  background-color: #19232D;
+  border: 1px solid #fcd726;
+}
+
+QPushButton:pressed:hover {
+  border: 1px solid #fcd726;
+}
+
+QPushButton:hover {
+  border: 1px solid #fcd726;
+  color: #F0F0F0;
+}
+
+QPushButton:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+QPushButton:focus {
+  border: 1px solid #fcd726;
+}
+
+
+/* QCommandLinkButton -----------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QCommandLinkButton {
+  background-color: transparent;
+  border: 0px solid #32414B;
+  color: #F0F0F0;
+  border-radius: 4px;
+  padding: 0px;
+  margin: 0px;
+}
+
+QCommandLinkButton:disabled {
+  background-color: transparent;
+  color: #787878;
+}
+
+QCommandLinkButton:hover{
+border:0px
+}
+
+QCommandLinkButton:pressed:hover{
+border:0px
+}
+
+QCommandLinkButton:selected{
+border:0px
+}
+
+QCommandLinkButton:focus{
+border:0px
+}
+
+QCommandLinkButton:pressed{
+border:0px
+}
+
+
+/* QToolButton ------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtoolbutton
+
+--------------------------------------------------------------------------- */
+QToolButton {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 0px;
+  padding: 2px;
+  /* The subcontrols below are used only in the DelayedPopup mode */
+  /* The subcontrols below are used only in the MenuButtonPopup mode */
+  /* The subcontrol below is used only in the InstantPopup or DelayedPopup mode */
+}
+
+QToolButton:checked {
+  background-color: transparent;
+  border: 1px solid #fcd726;
+}
+
+QToolButton:checked:disabled {
+  border: 1px solid #14506E;
+}
+
+QToolButton:pressed {
+  margin: 1px;
+  background-color: transparent;
+  border: 1px solid #fcd726;
+}
+
+QToolButton:disabled {
+  border: none;
+}
+
+QToolButton:hover {
+  border: 1px solid #fcd726;
+}
+
+QToolButton[popupMode=&quot;0&quot;] {
+  /* Only for DelayedPopup */
+  padding-right: 2px;
+}
+
+QToolButton[popupMode=&quot;1&quot;] {
+  /* Only for MenuButtonPopup */
+  padding-right: 20px;
+}
+
+QToolButton[popupMode=&quot;1&quot;]::menu-button {
+  border: none;
+}
+
+QToolButton[popupMode=&quot;1&quot;]::menu-button:hover {
+  border: none;
+  border-left: 1px solid #fcd726;
+  border-radius: 0;
+}
+
+QToolButton[popupMode=&quot;2&quot;] {
+  /* Only for InstantPopup */
+  padding-right: 2px;
+}
+
+QToolButton::menu-button {
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid #32414B;
+  width: 12px;
+  outline: none;
+}
+
+QToolButton::menu-button:hover {
+  border: 1px solid #fcd726;
+}
+
+QToolButton::menu-button:checked:hover {
+  border: 1px solid #fcd726;
+}
+
+
+/* ------------------------------------------------------------------------ */
+/* INPUTS - NO FIELDS ----------------------------------------------------- */
+/* ------------------------------------------------------------------------ */
+/* QComboBox --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qcombobox
+
+--------------------------------------------------------------------------- */
+QComboBox {
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  selection-background-color: #fcd726;
+  padding-left: 4px;
+  padding-right: 36px;
+  /* 4 + 16*2 See scrollbar size */
+  /* Fixes #103, #111 */
+  min-height: 1.5em;
+  /* padding-top: 2px;     removed to fix #132 */
+  /* padding-bottom: 2px;  removed to fix #132 */
+  /* min-width: 75px;      removed to fix #109 */
+  /* Needed to remove indicator - fix #132 */
+}
+
+QComboBox QAbstractItemView {
+  border: 1px solid #32414B;
+  border-radius: 0;
+  background-color: #19232D;
+  selection-background-color: #fcd726;
+}
+
+QComboBox QAbstractItemView:hover {
+  background-color: #19232D;
+  color: #F0F0F0;
+}
+
+QComboBox QAbstractItemView:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+QComboBox QAbstractItemView:alternate {
+  background: #19232D;
+}
+
+QComboBox:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+QComboBox:hover {
+  border: 1px solid #fcd726;
+}
+
+QComboBox:focus {
+  border: 1px solid #fcd726;
+}
+
+QComboBox:on {
+  selection-background-color: #fcd726;
+}
+
+QComboBox::indicator {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  selection-background-color: transparent;
+  color: transparent;
+  selection-color: transparent;
+  /* Needed to remove indicator - fix #132 */
+}
+
+QComboBox::indicator:alternate {
+  background: #19232D;
+}
+
+QComboBox::item:alternate {
+  background: #19232D;
+}
+
+QComboBox::item:checked {
+  font-weight: bold;
+}
+
+QComboBox::item:selected {
+  border: 0px solid transparent;
+}
+
+QComboBox::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 12px;
+  border-left: 1px solid #32414B;
+}
+
+
+
+
+/* QSlider ----------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qslider
+
+--------------------------------------------------------------------------- */
+QSlider:disabled {
+  background: #19232D;
+}
+
+QSlider:focus {
+  border: none;
+}
+
+QSlider::groove:horizontal {
+  background: #32414B;
+  border: 1px solid #32414B;
+  height: 4px;
+  margin: 0px;
+  border-radius: 4px;
+}
+
+QSlider::groove:vertical {
+  background: #32414B;
+  border: 1px solid #32414B;
+  width: 4px;
+  margin: 0px;
+  border-radius: 4px;
+}
+
+QSlider::add-page:vertical {
+  background: #fcd726;
+  border: 1px solid #32414B;
+  width: 4px;
+  margin: 0px;
+  border-radius: 4px;
+}
+
+QSlider::add-page:vertical :disabled {
+  background: #14506E;
+}
+
+QSlider::sub-page:horizontal {
+  background: #fcd726;
+  border: 1px solid #32414B;
+  height: 4px;
+  margin: 0px;
+  border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+  background: #14506E;
+}
+
+QSlider::handle:horizontal {
+  background: #787878;
+  border: 1px solid #32414B;
+  width: 8px;
+  height: 8px;
+  margin: -8px 0px;
+  border-radius: 4px;
+}
+
+QSlider::handle:horizontal:hover {
+  background: #fcd726;
+  border: 1px solid #fcd726;
+}
+
+QSlider::handle:horizontal:focus {
+  border: 1px solid #fcd726;
+}
+
+QSlider::handle:vertical {
+  background: #787878;
+  border: 1px solid #32414B;
+  width: 8px;
+  height: 8px;
+  margin: 0 -8px;
+  border-radius: 4px;
+}
+
+QSlider::handle:vertical:hover {
+  background: #fcd726;
+  border: 1px solid #fcd726;
+}
+
+QSlider::handle:vertical:focus {
+  border: 1px solid #fcd726;
+}
+
+/* QLineEdit --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qlineedit
+
+--------------------------------------------------------------------------- */
+QLineEdit {
+  background-color: #19232D;
+  padding-top: 2px;
+  /* This QLineEdit fix  103, 111 */
+  padding-bottom: 2px;
+  /* This QLineEdit fix  103, 111 */
+  padding-left: 4px;
+  padding-right: 4px;
+  border-style: solid;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  color: #F0F0F0;
+}
+
+QLineEdit:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+QLineEdit:hover {
+  border: 1px solid #fcd726;
+  color: #F0F0F0;
+}
+
+QLineEdit:focus {
+  border: 1px solid #fcd726;
+}
+
+QLineEdit:selected {
+  background-color: #fcd726;
+  color: #32414B;
+}
+
+/* QTabWiget --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
+
+--------------------------------------------------------------------------- */
+QTabWidget {
+  padding: 2px;
+  selection-background-color: #32414B;
+}
+
+QTabWidget QWidget {
+  /* Fixes #189 */
+  border-radius: 4px;
+}
+
+QTabWidget::pane {
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  margin: 0px;
+  /* Fixes double border inside pane with pyqt5 */
+  padding: 0px;
+}
+
+QTabWidget::pane:selected {
+  background-color: #32414B;
+  border: 1px solid #fcd726;
+}
+
+/* QTabBar ----------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
+
+--------------------------------------------------------------------------- */
+QTabBar {
+  qproperty-drawBase: 0;
+  border-radius: 4px;
+  margin: 0px;
+  padding: 2px;
+  border: 0;
+  /* left: 5px; move to the right by 5px - removed for fix */
+}
+
+
+
+
+/* QTabBar::tab - selected ------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
+
+--------------------------------------------------------------------------- */
+QTabBar::tab {
+  /* !selected and disabled ----------------------------------------- */
+  /* selected ------------------------------------------------------- */
+}
+
+QTabBar::tab:top:selected:disabled {
+  border-bottom: 3px solid #14506E;
+  color: #787878;
+  background-color: #32414B;
+}
+
+QTabBar::tab:bottom:selected:disabled {
+  border-top: 3px solid #14506E;
+  color: #787878;
+  background-color: #32414B;
+}
+
+QTabBar::tab:left:selected:disabled {
+  border-right: 3px solid #14506E;
+  color: #787878;
+  background-color: #32414B;
+}
+
+QTabBar::tab:right:selected:disabled {
+  border-left: 3px solid #14506E;
+  color: #787878;
+  background-color: #32414B;
+}
+
+QTabBar::tab:top:!selected:disabled {
+  border-bottom: 3px solid #19232D;
+  color: #787878;
+  background-color: #19232D;
+}
+
+QTabBar::tab:bottom:!selected:disabled {
+  border-top: 3px solid #19232D;
+  color: #787878;
+  background-color: #19232D;
+}
+
+QTabBar::tab:left:!selected:disabled {
+  border-right: 3px solid #19232D;
+  color: #787878;
+  background-color: #19232D;
+}
+
+QTabBar::tab:right:!selected:disabled {
+  border-left: 3px solid #19232D;
+  color: #787878;
+  background-color: #19232D;
+}
+
+QTabBar::tab:top:!selected {
+  border-bottom: 2px solid #19232D;
+  margin-top: 2px;
+}
+
+QTabBar::tab:bottom:!selected {
+  border-top: 2px solid #19232D;
+  margin-bottom: 3px;
+}
+
+QTabBar::tab:left:!selected {
+  border-left: 2px solid #19232D;
+  margin-right: 2px;
+}
+
+QTabBar::tab:right:!selected {
+  border-right: 2px solid #19232D;
+  margin-left: 2px;
+}
+
+QTabBar::tab:top {
+  background-color: #32414B;
+  color: #F0F0F0;
+  margin-left: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  min-width: 5px;
+  border-bottom: 3px solid #32414B;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+QTabBar::tab:top:selected {
+  background-color: #505F69;
+  color: #F0F0F0;
+  border-bottom: 3px solid #fcd726;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+QTabBar::tab:top:!selected:hover {
+  border: 1px solid #fcd726;
+  border-bottom: 3px solid #fcd726;
+  /* Fixes spyder-ide/spyder#9766 */
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+QTabBar::tab:bottom {
+  color: #F0F0F0;
+  border-top: 3px solid #32414B;
+  background-color: #32414B;
+  margin-left: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  min-width: 5px;
+}
+
+QTabBar::tab:bottom:selected {
+  color: #F0F0F0;
+  background-color: #505F69;
+  border-top: 3px solid #fcd726;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+QTabBar::tab:bottom:!selected:hover {
+  border: 1px solid #fcd726;
+  border-top: 3px solid #fcd726;
+  /* Fixes spyder-ide/spyder#9766 */
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+QTabBar::tab:left {
+  color: #F0F0F0;
+  background-color: #32414B;
+  margin-top: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  min-height: 5px;
+}
+
+QTabBar::tab:left:selected {
+  color: #F0F0F0;
+  background-color: #505F69;
+  border-right: 3px solid #fcd726;
+}
+
+QTabBar::tab:left:!selected:hover {
+  border: 1px solid #fcd726;
+  border-right: 3px solid #fcd726;
+  padding: 0px;
+}
+
+QTabBar::tab:right {
+  color: #F0F0F0;
+  background-color: #32414B;
+  margin-top: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  min-height: 5px;
+}
+
+QTabBar::tab:right:selected {
+  color: #F0F0F0;
+  background-color: #505F69;
+  border-left: 3px solid #fcd726;
+}
+
+QTabBar::tab:right:!selected:hover {
+  border: 1px solid #fcd726;
+  border-left: 3px solid #fcd726;
+  padding: 0px;
+}
+
+QTabBar QToolButton {
+  /* Fixes #136 */
+  background-color: #32414B;
+  height: 12px;
+  width: 12px;
+}
+
+QTabBar QToolButton:pressed {
+  background-color: #32414B;
+}
+
+QTabBar QToolButton:pressed:hover {
+  border: 1px solid #fcd726;
+}
+
+
+
+
+
+/* QDockWiget -------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QDockWidget {
+  outline: 1px solid #32414B;
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  titlebar-close-icon: url(&quot;:/qss_icons/rc/window_close.png&quot;);
+  titlebar-normal-icon: url(&quot;:/qss_icons/rc/window_undock.png&quot;);
+}
+
+QDockWidget::title {
+  /* Better size for title bar */
+  padding: 6px;
+  spacing: 4px;
+  border: none;
+  background-color: #32414B;
+}
+
+QDockWidget::close-button {
+  background-color: #32414B;
+  border-radius: 4px;
+  border: none;
+}
+
+
+QDockWidget::float-button {
+  background-color: #32414B;
+  border-radius: 4px;
+  border: none;
+}
+
+
+
+/* QTreeView QListView QTableView -----------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtreeview
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qlistview
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtableview
+
+--------------------------------------------------------------------------- */
+QTreeView:branch:selected, QTreeView:branch:hover {
+  background: url(&quot;:/qss_icons/rc/transparent.png&quot;);
+}
+
+
+
+
+
+
+
+
+
+QTreeView,
+QListView,
+QTableView,
+QColumnView {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  gridline-color: #32414B;
+  border-radius: 4px;
+}
+
+QTreeView:disabled,
+QListView:disabled,
+QTableView:disabled,
+QColumnView:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+QTreeView:selected,
+QListView:selected,
+QTableView:selected,
+QColumnView:selected {
+  background-color: #fcd726;
+  color: #32414B;
+}
+
+QTreeView:hover,
+QListView:hover,
+QTableView:hover,
+QColumnView:hover {
+  background-color: #19232D;
+  border: 1px solid #fcd726;
+}
+
+QTreeView::item:pressed,
+QListView::item:pressed,
+QTableView::item:pressed,
+QColumnView::item:pressed {
+  background-color: #fcd726;
+}
+
+QTreeView::item:selected:hover,
+QListView::item:selected:hover,
+QTableView::item:selected:hover,
+QColumnView::item:selected:hover {
+  background: #fcd726;
+  color: #19232D;
+}
+
+QTreeView::item:selected:active,
+QListView::item:selected:active,
+QTableView::item:selected:active,
+QColumnView::item:selected:active {
+  background-color: #fcd726;
+}
+
+QTreeView::item:!selected:hover,
+QListView::item:!selected:hover,
+QTableView::item:!selected:hover,
+QColumnView::item:!selected:hover {
+  outline: 0;
+  color: #fcd726;
+  background-color: #32414B;
+}
+
+QTableCornerButton::section {
+  background-color: #19232D;
+  border: 1px transparent #32414B;
+  border-radius: 0px;
+}
+
+/* QHeaderView ------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qheaderview
+
+--------------------------------------------------------------------------- */
+QHeaderView {
+  background-color: #32414B;
+  border: 0px transparent #32414B;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+
+QHeaderView:disabled {
+  background-color: #32414B;
+  border: 1px transparent #32414B;
+  padding: 2px;
+}
+
+QHeaderView::section {
+  background-color: #32414B;
+  color: #F0F0F0;
+  padding: 2px;
+  border-radius: 0px;
+  text-align: left;
+}
+
+QHeaderView::section:checked {
+  color: #F0F0F0;
+  background-color: #fcd726;
+}
+
+QHeaderView::section:checked:disabled {
+  color: #787878;
+  background-color: #14506E;
+}
+
+QHeaderView::section::horizontal {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-left: 1px solid #19232D;
+}
+
+QHeaderView::section::horizontal::first, QHeaderView::section::horizontal::only-one {
+  border-left: 1px solid #32414B;
+}
+
+QHeaderView::section::horizontal:disabled {
+  color: #787878;
+}
+
+QHeaderView::section::vertical {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-top: 1px solid #19232D;
+}
+
+QHeaderView::section::vertical::first, QHeaderView::section::vertical::only-one {
+  border-top: 1px solid #32414B;
+}
+
+QHeaderView::section::vertical:disabled {
+  color: #787878;
+}
+
+
+
+
+/* QToolBox --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qtoolbox
+
+--------------------------------------------------------------------------- */
+QToolBox {
+  padding: 0px;
+  border: 0px;
+  border: 1px solid #32414B;
+}
+
+QToolBox:selected {
+  padding: 0px;
+  border: 2px solid #fcd726;
+}
+
+QToolBox::tab {
+  background-color: #19232D;
+  border: 1px solid #32414B;
+  color: #F0F0F0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+QToolBox::tab:disabled {
+  color: #787878;
+}
+
+QToolBox::tab:selected {
+  background-color: #505F69;
+  border-bottom: 2px solid #fcd726;
+}
+
+QToolBox::tab:selected:disabled {
+  background-color: #32414B;
+  border-bottom: 2px solid #14506E;
+}
+
+QToolBox::tab:!selected {
+  background-color: #32414B;
+  border-bottom: 2px solid #32414B;
+}
+
+QToolBox::tab:!selected:disabled {
+  background-color: #19232D;
+}
+
+QToolBox::tab:hover {
+  border-color: #fcd726;
+  border-bottom: 2px solid #fcd726;
+}
+
+QToolBox QScrollArea QWidget QWidget {
+  padding: 0px;
+  border: 0px;
+  background-color: #19232D;
+}
+
+/* QFrame -----------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
+https://doc.qt.io/qt-5/qframe.html#-prop
+https://doc.qt.io/qt-5/qframe.html#details
+https://stackoverflow.com/questions/14581498/qt-stylesheet-for-hline-vline-color
+
+--------------------------------------------------------------------------- */
+/* (dot) .QFrame  fix #141, #126, #123 */
+.QFrame {
+  border-radius: 4px;
+  border: 1px solid #32414B;
+  /* No frame */
+  /* HLine */
+  /* HLine */
+}
+
+.QFrame[frameShape=&quot;0&quot;] {
+  border-radius: 4px;
+  border: 1px transparent #32414B;
+}
+
+.QFrame[frameShape=&quot;4&quot;] {
+  max-height: 2px;
+  border: none;
+  background-color: #32414B;
+}
+
+.QFrame[frameShape=&quot;5&quot;] {
+  max-width: 2px;
+  border: none;
+  background-color: #32414B;
+}
+
+/* QSplitter --------------------------------------------------------------
+
+https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qsplitter
+
+--------------------------------------------------------------------------- */
+QSplitter {
+  background-color: #32414B;
+  spacing: 0px;
+  padding: 0px;
+  margin: 0px;
+}
+
+QSplitter::handle {
+  background-color: #32414B;
+  border: 0px solid #19232D;
+  spacing: 0px;
+  padding: 1px;
+  margin: 0px;
+}
+
+QSplitter::handle:hover {
+  background-color: #787878;
+}
+
+
+
+
+/* QDateEdit --------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QDateEdit {
+  selection-background-color: #fcd726;
+  border-style: solid;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  /* This fixes 103, 111 */
+  padding-top: 2px;
+  /* This fixes 103, 111 */
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 10px;
+}
+
+QDateEdit:on {
+  selection-background-color: #fcd726;
+}
+
+QDateEdit::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 12px;
+  border-left: 1px solid #32414B;
+}
+
+
+
+QDateEdit QAbstractItemView {
+  background-color: #19232D;
+  border-radius: 4px;
+  border: 1px solid #32414B;
+  selection-background-color: #fcd726;
+}
+
+/* QAbstractView ----------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QAbstractView:hover {
+  border: 1px solid #fcd726;
+  color: #F0F0F0;
+}
+
+QAbstractView:selected {
+  background: #fcd726;
+  color: #32414B;
+}
+
+/* PlotWidget -------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+PlotWidget {
+  /* Fix cut labels in plots #134 */
+  padding: 0px;
+}</string>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>781</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>252</red>
+          <green>215</green>
+          <blue>38</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="HighlightedText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>252</red>
+          <green>215</green>
+          <blue>38</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="HighlightedText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>120</red>
+          <green>120</green>
+          <blue>120</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>120</red>
+          <green>120</green>
+          <blue>120</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>120</red>
+          <green>120</green>
+          <blue>120</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>25</red>
+          <green>35</green>
+          <blue>45</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>20</red>
+          <green>80</green>
+          <blue>110</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="HighlightedText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>120</red>
+          <green>120</green>
+          <blue>120</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="font">
+     <font>
+      <family>Palatino Linotype</family>
+      <pointsize>33</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <stylestrategy>PreferDefault</stylestrategy>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>7</number>
+    </property>
+    <property name="midLineWidth">
+     <number>8</number>
+    </property>
+    <property name="text">
+     <string extracomment="Logo text">Yellow Pages SG Crawler</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>100</y>
+      <width>621</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777205</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:white</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>621</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777205</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:white</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>120</y>
+      <width>721</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#ffffff; vertical-align:super;&quot;&gt;- Instructions -&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#ffffff;&quot;&gt;Wait for the yellow pages website to open then make your search and click &amp;quot;Start Bot&amp;quot; to scrape the data&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>230</y>
+      <width>781</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>22</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="toolTip">
+     <string>Scraped Data will show here</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="midLineWidth">
+     <number>0</number>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustIgnored</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>false</bool>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::NoSelection</enum>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectItems</enum>
+    </property>
+    <property name="showGrid">
+     <bool>true</bool>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::SolidLine</enum>
+    </property>
+    <property name="sortingEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="cornerButtonEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <attribute name="horizontalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>155</number>
+    </attribute>
+    <attribute name="horizontalHeaderHighlightSections">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>0</number>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>25</number>
+    </attribute>
+    <attribute name="verticalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normalon>:/newPrefix/resourses/icons8-contacts-100.png</normalon>
+      </iconset>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Address</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="icons resourses.qrc">
+       <normaloff>:/newPrefix/resourses/icons8-marker-100.png</normaloff>:/newPrefix/resourses/icons8-marker-100.png</iconset>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Email</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="icons resourses.qrc">
+       <normaloff>:/newPrefix/resourses/icons8-email-100.png</normaloff>:/newPrefix/resourses/icons8-email-100.png</iconset>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Phone</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="icons resourses.qrc">
+       <normaloff>:/newPrefix/resourses/icons8-phone-100.png</normaloff>:/newPrefix/resourses/icons8-phone-100.png</iconset>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Website</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="icons resourses.qrc">
+       <normaloff>:/newPrefix/resourses/icons8-internet-96.png</normaloff>:/newPrefix/resourses/icons8-internet-96.png</iconset>
+     </property>
+    </column>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>7</x>
+      <y>490</y>
+      <width>781</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QCommandLinkButton" name="commandLinkButton">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>550</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>© Copyright 2020 LorDAhmeD</string>
+    </property>
+    <property name="icon">
+     <iconset theme=";">
+      <normaloff>.</normaloff>.</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stop_btn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>522</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Stop Bot</string>
+    </property>
+    <property name="icon">
+     <iconset resource="icons resourses.qrc">
+      <normaloff>:/newPrefix/resourses/icons8-stop-100.png</normaloff>:/newPrefix/resourses/icons8-stop-100.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>33</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="start_btn">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>522</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Start Bot</string>
+    </property>
+    <property name="icon">
+     <iconset resource="icons resourses.qrc">
+      <normaloff>:/newPrefix/resourses/icons8-play-100.png</normaloff>:/newPrefix/resourses/icons8-play-100.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clear_btn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>190</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Clear Table</string>
+    </property>
+    <property name="icon">
+     <iconset resource="icons resourses.qrc">
+      <normaloff>:/newPrefix/resourses/icons8-trash-100.png</normaloff>:/newPrefix/resourses/icons8-trash-100.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>21</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="save_btn">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>190</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>CSV Export</string>
+    </property>
+    <property name="icon">
+     <iconset resource="icons resourses.qrc">
+      <normaloff>:/newPrefix/resourses/icons8-save-100.png</normaloff>:/newPrefix/resourses/icons8-save-100.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>25</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="logo.qrc"/>
+  <include location="icons resourses.qrc"/>
+ </resources>
+ <connections/>
+</ui>
