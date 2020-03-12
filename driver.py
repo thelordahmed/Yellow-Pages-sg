@@ -10,7 +10,7 @@ class Driver:
         self.window = self.open()
         self.xpaths = {
             "result": '*//div[@class="list_companies cmc_list"]/div',
-            "last_page": '//*[@id="load_companies"]//div[@class="pag"]//li[7]/a',
+            "last_page": '//*[@id="load_companies"]//div[@class="pag"]//li[last()]/a',
             "name": 'div[3]//a[@class="normal_title"]',  # .text
             "address": 'div[3]//div[@class="mapItem"]',  # .text
             "phone": 'div[3]//div[@class="show_number list_comp_label"]/a',  # .get_attribute("href") >> replace("tel:","")
@@ -23,10 +23,12 @@ class Driver:
     #############################################################
     def pages_links(self):
         """:return a list of all pages links"""
-        last_page = self.window.find_element_by_xpath(self.xpaths["last_page"]).get_attribute("value")
         cur_url = self.window.current_url
+        last_page = self.window.find_element_by_xpath(self.xpaths["last_page"]).get_attribute("value")
         pages = []
         for page in range(1,int(last_page)+1):
+            if "?page=" in cur_url:
+                break
             page = cur_url + f"?page={str(page)}"
             pages.append(page)
         return pages
@@ -64,6 +66,6 @@ class Driver:
             chromedriver_update(r"C:\ProgramData")
             sleep(1)
             win = Chrome(r"C:\ProgramData\chromedriver.exe")
-        win.get("https://www.yellowpages.com.sg")
+        win.get("https://www.yellowpages.com.sg/category/lawyers")
         return win
 

@@ -1869,6 +1869,10 @@ class Ui_MainWindow(object):
         self.line.setFrameShape(QFrame.HLine)
         self.line.setFrameShadow(QFrame.Sunken)
         self.line_2 = QFrame(self.centralwidget)
+
+        self.counter = QLCDNumber(self.centralwidget)
+        self.counter.setGeometry(QRect(20, 190, 64, 31))
+
         self.line_2.setObjectName(u"line_2")
         self.line_2.setGeometry(QRect(90, 20, 621, 3))
         self.line_2.setMaximumSize(QSize(16777205, 16777215))
@@ -1956,6 +1960,7 @@ class Ui_MainWindow(object):
         self.tableWidget.verticalHeader().setStretchLastSection(False)
         self.progressBar = QProgressBar(self.centralwidget)
         self.progressBar.setObjectName(u"progressBar")
+        self.progressBar.setTextVisible(False)
         self.progressBar.setGeometry(QRect(7, 490, 781, 23))
         self.progressBar.setValue(0)
         self.commandLinkButton = QCommandLinkButton(self.centralwidget)

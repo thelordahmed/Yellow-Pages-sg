@@ -8,6 +8,15 @@ class Model:
 
     def addTodata(self, data):
         with self.conn:
-            self.cur.execute('''INSERT INTO data VALUES (?,?,?,?,?)''', data)
-            
+            self.cur.execute('''INSERT INTO data VALUES (?,?,?,?,?,?)''', data)
 
+
+    def findUrl(self, url):
+        self.cur.execute('''SELECT page_url FROM data WHERE page_url = (:url)''', {"url": url})
+        value = self.cur.fetchone()
+        return value
+
+
+
+str = "ahmed"
+str.replace("q", "s")
