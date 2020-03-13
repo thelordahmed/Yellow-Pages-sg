@@ -59,7 +59,6 @@ class Controller():
 
 
     def process(self):
-        self.view.statusbar.showMessage(">>>    Scraping the data... ")
         self.model = Model()  # sqlite3 must be in same thread
         win = self.driver.window
         try:
@@ -76,7 +75,10 @@ class Controller():
                 break
             if self.model.findUrl(page) is not None:
                 continue
-            # sleep(random.randint(10,25))  # to break the pattern
+            self.view.statusbar.showMessage(">>>    Delaying Randomly (10-25 seconds) to avoid block... ")
+            sleep(random.randint(15,25))  # to break the pattern
+            if self.stopChecker == 0:
+                self.view.statusbar.showMessage(">>>    Scraping the data... ")
             win.get(page)
             results = win.find_elements_by_xpath(self.driver.xpaths["result"])
     # RESULT LOOP
@@ -106,6 +108,7 @@ class Controller():
         self.stopChecker = 0
         self.view.stop_btn.setDisabled(True)
         self.view.start_btn.setEnabled(True)
+        self.view.start_btn.setFocus()
         self.view.statusbar.showMessage(">>>    Ready! ")
 
 
@@ -124,8 +127,10 @@ class Controller():
         self.process_thread.start()
         self.view.stop_btn.setEnabled(True)
         self.view.start_btn.setDisabled(True)
+        self.view.stop_btn.setFocus()
 
     def stop_func(self):
+        self.view.statusbar.showMessage(">>>    Stopping...")
         self.stopChecker = 1
 
     def clear_func(self):

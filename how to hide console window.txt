@@ -1,0 +1,21 @@
+********** how to hide chromedriver console ************
+
+Locate service.py, generally in "X:\YourPythonFold\Lib\site-packages\selenium\webdriver\common\service.py"
+
+Replace these lines :
+self.process = subprocess.Popen(cmd, env=self.env,
+                                            close_fds=platform.system() != 'Windows',
+                                            stdout=self.log_file,
+                                            stderr=self.log_file,
+                                            stdin=PIPE)
+
+with these:
+if any("hide_console" in arg for arg in self.command_line_args()):
+                self.process = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, creationflags=0x08000000)
+            else:
+                self.process = subprocess.Popen(cmd, env=self.env, close_fds=platform.system() != 'Windows', stdout=self.log_file, stderr=self.log_file, stdin=PIPE)
+
+
+Finally in your code apply this:
+args = ["hide_console", ]
+driver = webdriver.Chrome("your-path-to-chromedriver.exe", service_args=args)

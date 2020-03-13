@@ -1,2 +1,7 @@
 * to convert ui file to python 	>>	 pyside2-uic file.ui -o file.py
 to convert resources files to python	 >> 	pyside2-rcc "logo.qrc" -o "logo.py"
+
+
+pyinstaller -n "YP Crawler" -F -w controller.py
+
+

@@ -5,6 +5,7 @@ from time import sleep
 import random
 from pubsub import pub
 
+
 class Driver:
     def __init__(self):
         self.window = self.open()
@@ -49,8 +50,9 @@ class Driver:
                 data = "-"
             return data
 
-    @staticmethod
-    def open():
+    def open(self):
+        args = ["hide_console", ]
+
         def chromedriver_update(zip_extract_path):
             stable_ver = requests.get("https://chromedriver.storage.googleapis.com/LATEST_RELEASE").text
             file = requests.get(f"https://chromedriver.storage.googleapis.com/{stable_ver}/chromedriver_win32.zip")
@@ -58,16 +60,19 @@ class Driver:
             z.extractall(zip_extract_path)
 
         try:
-            win = Chrome(r"C:\ProgramData\chromedriver.exe")
+            win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
+            # win = Chrome(r"C:\ProgramData\chromedriver.exe")
         except SessionNotCreatedException:
             print("chromedriver.exe is outdated .. Updating...")
             chromedriver_update(r"C:\ProgramData")
-            win = Chrome(r"C:\ProgramData\chromedriver.exe")
+            win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
+            # win = Chrome(r"C:\ProgramData\chromedriver.exe")
         except WebDriverException:
             print("chromedriver.exe is outdated .. Updating...")
             chromedriver_update(r"C:\ProgramData")
             sleep(1)
-            win = Chrome(r"C:\ProgramData\chromedriver.exe")
+            win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
+            # win = Chrome(r"C:\ProgramData\chromedriver.exe")
         win.get("https://www.yellowpages.com.sg")
         return win
 
