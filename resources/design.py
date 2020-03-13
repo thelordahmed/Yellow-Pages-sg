@@ -2047,9 +2047,6 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Email", None));
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Website", None));
-#if QT_CONFIG(tooltip)
-        self.tableWidget.setToolTip(QCoreApplication.translate("MainWindow", u"Scraped Data will show here", None))
-#endif // QT_CONFIG(tooltip)
         self.commandLinkButton.setText(QCoreApplication.translate("MainWindow", u"\u00a9 Copyright 2020 LorDAhmeD", None))
         self.stop_btn.setText(QCoreApplication.translate("MainWindow", u"Stop Bot", None))
         self.start_btn.setText(QCoreApplication.translate("MainWindow", u"Start Bot", None))

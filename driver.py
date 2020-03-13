@@ -3,11 +3,12 @@ from selenium.common.exceptions import SessionNotCreatedException, WebDriverExce
 import requests, zipfile, io
 from time import sleep
 import random
-
+from pubsub import pub
 
 class Driver:
     def __init__(self):
         self.window = self.open()
+        pub.sendMessage("driver has loaded")
         self.xpaths = {
             "result": '*//div[@class="list_companies cmc_list"]/div',
             "last_page": '//*[@id="load_companies"]//div[@class="pag"]//li[last()]/a',
@@ -33,7 +34,8 @@ class Driver:
             pages.append(page)
         return pages
 
-    def get_data(self,element,xpath, text_or_attr = "text"):  # to simplify the code
+    @staticmethod
+    def get_data(element,xpath, text_or_attr = "text"):  # to simplify the code
         if text_or_attr == "text":
             try:
                 data = element.find_element_by_xpath(xpath).text
@@ -66,6 +68,6 @@ class Driver:
             chromedriver_update(r"C:\ProgramData")
             sleep(1)
             win = Chrome(r"C:\ProgramData\chromedriver.exe")
-        win.get("https://www.yellowpages.com.sg/category/lawyers")
+        win.get("https://www.yellowpages.com.sg")
         return win
 

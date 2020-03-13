@@ -8,6 +8,8 @@ from driver import Driver
 from selenium.common.exceptions import NoSuchElementException
 import random
 from time import sleep
+import webbrowser
+import csv
 
 
 class Singals(QObject):
@@ -23,11 +25,13 @@ class Controller():
     def __init__(self):
         self.driver_thread = Thread(target=self.start_driver).start()  # a thread for the driver to open the browser at the same time with bot
         self.model = None
+        self.modelConn2 = Model()
         self.view = View()
         self.driver = None
         self.process_thread = Thread(target=self.process)
         self.singals = Singals()
         self.pages = None
+        self.view.statusbar.showMessage(">>>    Loading the browser... ")
 
 ################################################################
 ########################   SIGNALS   ###########################
@@ -37,8 +41,11 @@ class Controller():
         self.singals.lcdTrigger.connect(self.view.lcdCounter)
         self.view.start_btn.clicked.connect(self.start_process)
         self.view.stop_btn.clicked.connect(self.stop_func)
+        self.view.commandLinkButton.clicked.connect(self.copyright_func)
+        self.view.clear_btn.clicked.connect(self.clear_func)
+        self.view.save_btn.clicked.connect(self.export_func)
 ################################################################
-
+        self.loadDataToView()   # this must come after connections made (to activate the lcd signal)
 
 
     def start_driver(self):
@@ -52,6 +59,7 @@ class Controller():
 
 
     def process(self):
+        self.view.statusbar.showMessage(">>>    Scraping the data... ")
         self.model = Model()  # sqlite3 must be in same thread
         win = self.driver.window
         try:
@@ -62,19 +70,16 @@ class Controller():
         if len(returnedPages) > 0:  # zero means that we found "?page=" in the current url .. means we are in the same search
             self.pages =returnedPages
         self.view.progressBar.setRange(0, len(self.pages))
-        # this counter will count how many pages skipped ..
-        # if no pages skipped (counter = 0) means that we are in a new search >> so reassign the pages list
-
-
+# PAGE LOOP
         for index, page in enumerate(self.pages):
             if self.stopChecker == 1:
                 break
             if self.model.findUrl(page) is not None:
                 continue
-
             # sleep(random.randint(10,25))  # to break the pattern
             win.get(page)
             results = win.find_elements_by_xpath(self.driver.xpaths["result"])
+    # RESULT LOOP
             for result in results:
                 if self.stopChecker == 1:
                     break
@@ -88,24 +93,31 @@ class Controller():
                     website = website.replace("https://", "")
                 elif "http://" in website:
                     website = website.replace("http://", "")
-                self.model.addTodata((name, address, phone, email, website, page))                ## ---> Model
-                self.singals.trigger.emit((name, address, phone, email, website))         ## ---> TableWidget
-                self.singals.lcdTrigger.emit()
-            # incrementing the PROGRESS BAR
+                self.model.addTodata((name, address, phone, email, website, page))          ## ---> Model
+                self.singals.trigger.emit((name, address, phone, email, website))           ## ---> TableWidget
+                self.singals.lcdTrigger.emit()                                              ## ---> LCDCounter
+            # increasing the PROGRESS BAR
             steps = index + 1
             self.singals.barTrigger.emit(steps)
 
         self.stopProcess()
 
-
     def stopProcess(self):
         self.stopChecker = 0
         self.view.stop_btn.setDisabled(True)
         self.view.start_btn.setEnabled(True)
+        self.view.statusbar.showMessage(">>>    Ready! ")
+
+
+    def loadDataToView(self):
+        records = self.modelConn2.getAllRecords()
+        for tup in records:
+            self.view.addToTableWidget(tup)
+        self.singals.lcdTrigger.emit()
+
 ##########################################
 ############   SLOTS   ###################
 ##########################################
-
 
     def start_process(self):
         self.process_thread = Thread(target=self.process)
@@ -117,10 +129,28 @@ class Controller():
         self.stopChecker = 1
 
     def clear_func(self):
-        pass
+        re = self.view.message("Confirm Clearing", "Do you wanna Delete all records ?", "warning")
+        if re is True:
+            self.view.tableWidget.setRowCount(0)   ## that removes all rows items
+            self.modelConn2.clearDatabase()
+            self.singals.lcdTrigger.emit()
+            self.view.progressBar.reset()
 
     def export_func(self):
-        pass
+        try:
+            path = self.view.saveDialog()
+            data = self.modelConn2.getAllRecords()
+            with open(path, "w", encoding = "utf-8", newline = "") as f:
+                for row in data:
+                    writer = csv.writer(f)
+                    writer.writerow(row)
+        except FileNotFoundError:
+            print("saving cancelled!")
+
+
+    @staticmethod
+    def copyright_func():
+        webbrowser.open("https://www.fiverr.com/lordahmed")
 
 
 if __name__ == "__main__":
