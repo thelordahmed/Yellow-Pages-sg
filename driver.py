@@ -9,7 +9,6 @@ from pubsub import pub
 class Driver:
     def __init__(self):
         self.window = self.open()
-        pub.sendMessage("driver has loaded")
         self.xpaths = {
             "result": '*//div[@class="list_companies cmc_list"]/div',
             "last_page": '//*[@id="load_companies"]//div[@class="pag"]//li[last()]/a',
@@ -74,5 +73,6 @@ class Driver:
             win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
             # win = Chrome(r"C:\ProgramData\chromedriver.exe")
         win.get("https://www.yellowpages.com.sg")
+        pub.sendMessage("driver has loaded")
         return win
 
