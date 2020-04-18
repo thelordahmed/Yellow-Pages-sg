@@ -2,7 +2,6 @@ from view import View
 from model import Model
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
-from PySide2.QtGui import *
 from threading import Thread
 from driver import Driver
 from selenium.common.exceptions import NoSuchElementException
@@ -10,12 +9,14 @@ import random
 from time import sleep
 import webbrowser
 import csv
+from pubsub import pub
 
 
-class Singals(QObject):
+class Signals(QObject):
     trigger = Signal(tuple)
     barTrigger = Signal(int)
     lcdTrigger = Signal()
+    browserReady = Signal()
 
 
 class Controller():
@@ -23,15 +24,13 @@ class Controller():
     isThisFirstRun = True
 
     def __init__(self):
-        self.driver_thread = Thread(target=self.start_driver).start()  # a thread for the driver to open the browser at the same time with bot
-        self.model = None
-        self.modelConn2 = Model()
         self.view = View()
-        self.driver = None
-        self.process_thread = Thread(target=self.process)
-        self.singals = Singals()
-        self.pages = None
         self.view.statusbar.showMessage(">>>    Loading the browser... ")
+        self.process_thread = Thread(target=self.process)
+        self.driver = Driver()
+        self.modelConn2 = Model()
+        self.singals = Signals(None)
+        self.pages = None
 
 ################################################################
 ########################   SIGNALS   ###########################
@@ -44,22 +43,21 @@ class Controller():
         self.view.commandLinkButton.clicked.connect(self.copyright_func)
         self.view.clear_btn.clicked.connect(self.clear_func)
         self.view.save_btn.clicked.connect(self.export_func)
+        ####################################################
+        pub.subscribe(self.view.activateStartBtn, "browser is ready")
 ################################################################
         self.loadDataToView()   # this must come after connections made (to activate the lcd signal)
 
 
-    def start_driver(self):
-        win = Driver()
-        self.driver = win
 
 
-    #############################################################
-    ######### the main loop #####################################
-    #############################################################
+#############################################################
+######### the main loop #####################################
+#############################################################
 
 
     def process(self):
-        self.model = Model()  # sqlite3 must be in same thread
+        model = Model()  # sqlite3 must be in same thread
         win = self.driver.window
         try:
             returnedPages = self.driver.pages_links()
@@ -70,34 +68,52 @@ class Controller():
             self.pages =returnedPages
         self.view.progressBar.setRange(0, len(self.pages))
 # PAGE LOOP
+        page_counter = 5
         for index, page in enumerate(self.pages):
+            page_counter += 1
             if self.stopChecker == 1:
                 break
-            if self.model.findUrl(page) is not None:
+            if model.findUrl(page) is not None:
                 continue
             self.view.statusbar.showMessage(">>>    Delaying Randomly (10-25 seconds) to avoid block... ")
-            sleep(random.randint(15,25))  # to break the pattern
+            sleep(random.randint(15, 25))  # to break the pattern
             if self.stopChecker == 0:
                 self.view.statusbar.showMessage(">>>    Scraping the data... ")
+            print("loading the page")
+            if page_counter == 6:
+                #----------- refreshing the browser every 5 pages to avoid (aw, snap) ----------
+                win.quit()
+                sleep(2)
+                self.driver.open_again()
+                sleep(1)
+                win = self.driver.window
+                page_counter = 0
+                #--------------------------------------------------------------------------------
+
             win.get(page)
             results = win.find_elements_by_xpath(self.driver.xpaths["result"])
+            print("got the result")
     # RESULT LOOP
             for result in results:
+                print("now in line 88")
                 if self.stopChecker == 1:
                     break
                 name = self.driver.get_data(result, self.driver.xpaths["name"])
                 address = self.driver.get_data(result, self.driver.xpaths["address"])
                 phone = self.driver.get_data(result, self.driver.xpaths["phone"], "href").replace("tel:", "")
+                sleep(random.randint(1,2))  # to break the pattern
                 email = self.driver.get_data(result, self.driver.xpaths["email"], "data-email")
                 website = self.driver.get_data(result, self.driver.xpaths["website"], "href")
+                print("scraped the data .. now in line 96")
+
                 # removing it to avoid a bug in the view (it shows https://...)
                 if "https://" in website:
                     website = website.replace("https://", "")
                 elif "http://" in website:
                     website = website.replace("http://", "")
-                self.model.addTodata((name, address, phone, email, website, page))          ## ---> Model
+                model.addTodata((name, address, phone, email, website, page))          ## ---> Model
                 self.singals.trigger.emit((name, address, phone, email, website))           ## ---> TableWidget
-                self.singals.lcdTrigger.emit()                                              ## ---> LCDCounter
+                self.singals.lcdTrigger.emit()                      #---> LCDCounter
             # increasing the PROGRESS BAR
             steps = index + 1
             self.singals.barTrigger.emit(steps)

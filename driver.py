@@ -2,13 +2,15 @@ from selenium.webdriver import Chrome
 from selenium.common.exceptions import SessionNotCreatedException, WebDriverException, NoSuchElementException
 import requests, zipfile, io
 from time import sleep
-import random
+from threading import Thread
 from pubsub import pub
+from selenium.webdriver.common.keys import Keys
 
 
 class Driver:
     def __init__(self):
-        self.window = self.open()
+        Thread(target=self.open).start()
+        self.window = None
         self.xpaths = {
             "result": '*//div[@class="list_companies cmc_list"]/div',
             "last_page": '//*[@id="load_companies"]//div[@class="pag"]//li[last()]/a',
@@ -19,11 +21,14 @@ class Driver:
             "email": 'div[3]//div[@class="company_enquiry list_comp_label"]/a'  # .get_attribute("data-email")
         }
 
+
     #############################################################
     ######### getting search pages urls #########################
     #############################################################
     def pages_links(self):
         """:return a list of all pages links"""
+        body = self.window.execute_script("window.stop()")
+        body.send_keys(Keys.ESCAPE)
         cur_url = self.window.current_url
         last_page = self.window.find_element_by_xpath(self.xpaths["last_page"]).get_attribute("value")
         pages = []
@@ -49,6 +54,7 @@ class Driver:
                 data = "-"
             return data
 
+
     def open(self):
         args = ["hide_console", ]
 
@@ -72,7 +78,36 @@ class Driver:
             sleep(1)
             win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
             # win = Chrome(r"C:\ProgramData\chromedriver.exe")
+        sleep(1)
         win.get("https://www.yellowpages.com.sg")
-        pub.sendMessage("driver has loaded")
-        return win
+        sleep(1)
+        pub.sendMessage("browser is ready")
+        sleep(1)
+        self.window = win
+        sleep(1)
 
+
+    def open_again(self):
+            args = ["hide_console", ]
+
+            def chromedriver_update(zip_extract_path):
+                stable_ver = requests.get("https://chromedriver.storage.googleapis.com/LATEST_RELEASE").text
+                file = requests.get(f"https://chromedriver.storage.googleapis.com/{stable_ver}/chromedriver_win32.zip")
+                z = zipfile.ZipFile(io.BytesIO(file.content))
+                z.extractall(zip_extract_path)
+
+            try:
+                win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
+                # win = Chrome(r"C:\ProgramData\chromedriver.exe")
+            except SessionNotCreatedException:
+                print("chromedriver.exe is outdated .. Updating...")
+                chromedriver_update(r"C:\ProgramData")
+                win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
+                # win = Chrome(r"C:\ProgramData\chromedriver.exe")
+            except WebDriverException:
+                print("chromedriver.exe is outdated .. Updating...")
+                chromedriver_update(r"C:\ProgramData")
+                win = Chrome(r"C:\ProgramData\chromedriver.exe", service_args=args)
+                # win = Chrome(r"C:\ProgramData\chromedriver.exe")
+            self.window = win
+            sleep(1)

@@ -1,20 +1,25 @@
 from PySide2.QtWidgets import *
 from PySide2.QtGui import *
-from PySide2.QtCore import *
-from resources.design import Ui_MainWindow
-from pubsub import pub
+from resources.design import Ui_MainWindow as design
+import os
 
 
-class View(QMainWindow, Ui_MainWindow):
+# Import your design to the class
+
+class View(QMainWindow, design):
     def __init__(self, parent=None):
         super(View, self).__init__(parent)
         self.setupUi(self)
         self.show()
         self.start_btn.setDisabled(True)  # to avoid clicking before browser loads
 
-        # waiting for the driver to load
-        pub.subscribe(self.activateStartBtn,"driver has loaded")
 
+
+
+
+    # Customizing the close event
+    def closeEvent(self, event: QCloseEvent):
+        os.system("taskkill /t /F /im chromedriver.exe")
 
     def addToTableWidget(self, data):  # slot >> trigger singal
         row_pos = self.tableWidget.rowCount()
@@ -41,6 +46,7 @@ class View(QMainWindow, Ui_MainWindow):
             return False
 
     def activateStartBtn(self):
+        print("activated")
         self.start_btn.setEnabled(True)
         self.statusbar.showMessage(">>>     Ready!")
 
